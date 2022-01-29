@@ -7,7 +7,7 @@
  * @author James Commons
  * @version 1.0
  */
-public class PiCalc {
+public class RiemannPiCalc {
 
     // CHANGE THIS VALUE FOR MORE OR LESS ACCURACY
     // Changing this value will change execution time if command line
