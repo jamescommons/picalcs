@@ -2,6 +2,8 @@
 /**
  * A simple algorithm for calculating pi. This program uses a Maclauren series 
  * to estimate π / 4. In the future, I might try to add multi-threading to this.
+ * The difference seems to be constant after a certain value of n. From DEFAULT_N
+ * on, I think pi is always calculated to be the same which is a little weird.
  * 
  * @author James Commons
  * @version 1.0
