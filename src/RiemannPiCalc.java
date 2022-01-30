@@ -132,7 +132,7 @@ public class RiemannPiCalc {
                 System.exit(1);
             }
         } else {
-            pi = calcPi(/*DEFAULT_N*/ 10_000_000_000L); 
+            pi = calcPi(DEFAULT_N); 
         }
 
         // Print results
