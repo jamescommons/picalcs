@@ -112,60 +112,6 @@ public class RiemannPiCalc {
         return sum * invN * 4;
     }
 
-    // Which calculator to test
-    private enum CalcVersion {
-        UNDERESTIMATE,
-        OVERESTIMATE,
-        BOTH;
-    }
-
-    // I found that as n gets really really big, the accuracy of
-    // the calculation drops off a bit. I have a couple of theories
-    // why, but I think the most likely has to do with floating point
-    // imprecision. Use this method to find the optimum value of n.
-    // Right now, I know it is around 90 - 100 billion.
-    private static long findOptimumNValue(CalcVersion calc) {
-        double minDiff = Double.MAX_VALUE;
-        double currentDiff = Math.PI; // Doesn't really matter what this is
-        double pi;
-
-        // Change this to the minimum value you know n is not.
-        long n = 90_000_000_000L; // Also should be a multiple of 10
-
-        // incrementer should be a multiple of 10. Change if you see fit.
-        long incrementer = 1_000_000_000L; // First increment by 10,000,000,000
-
-        while (incrementer > 0) {
-            System.out.println("\rn is currently: " + n);
-
-            switch (calc) {
-                case UNDERESTIMATE: 
-                    pi = underestimatePi(n);
-                    break;
-                case OVERESTIMATE:
-                    pi = overestimatePi(n);
-                    break;
-                default:
-                    pi = calcPi(n);
-            }
-
-            currentDiff = Math.abs(pi - Math.PI);
-            System.out.println("\rDifference is currently: " + currentDiff);
-
-            // Accuracy has dropped off if this is true
-            if (currentDiff > minDiff) {
-                n -= incrementer * 2; // Go back to second previous value of n
-                incrementer /= 10;
-                n += incrementer;
-            } else {
-                minDiff = currentDiff;
-                n += incrementer;
-            }
-        }
-
-        return n;
-    }
-
     // Main
     public static void main(String[] args) {
         System.out.println(
@@ -176,33 +122,25 @@ public class RiemannPiCalc {
         System.out.println();
 
         long startTime = System.currentTimeMillis();
-        // double pi = -1;
-        // if (args.length > 0) { // If user provided a commandline argument
-        //     try {
-        //         pi = calcPi(Long.parseLong(args[0]));
-        //     } catch (NumberFormatException e) {
-        //         System.err.println("Command line argument should be an int or long value.");
-        //         e.printStackTrace();
-        //         System.exit(1);
-        //     }
-        // } else {
-        //     pi = calcPi(DEFAULT_N); 
-        // }
+        double pi = -1;
+        if (args.length > 0) { // If user provided a commandline argument
+            try {
+                pi = calcPi(Long.parseLong(args[0]));
+            } catch (NumberFormatException e) {
+                System.err.println("Command line argument should be an int or long value.");
+                e.printStackTrace();
+                System.exit(1);
+            }
+        } else {
+            pi = calcPi(/*DEFAULT_N*/ 10_000_000_000L); 
+        }
 
-        // // Print results
-        // System.out.println("*** Results ***");
-        // System.out.println("Calculated π to be: " + pi);
-        // System.out.println("π actually equals:  " + Math.PI);
-        // System.out.println("Difference: " + (pi - Math.PI));
-        // System.out.println();
-
-        // Uncomment the following section to find optimum n values
-        // Note: the progress given is not accurate
-        // ***********************************************************************
-        System.out.println("*** Optimum n Value ***");
-        System.out.println("n = " + findOptimumNValue(CalcVersion.OVERESTIMATE));
-        // ***********************************************************************
-        // Change CalcVersion for different methods of calculating pi
+        // Print results
+        System.out.println("*** Results ***");
+        System.out.println("Calculated π to be: " + pi);
+        System.out.println("π actually equals:  " + Math.PI);
+        System.out.println("Difference: " + (pi - Math.PI));
+        System.out.println();
 
         // Print out elapsed time
         System.out.println("*** Elapsed Time ***");

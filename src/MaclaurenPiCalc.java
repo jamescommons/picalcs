@@ -13,7 +13,7 @@ public class MaclaurenPiCalc {
     // CHANGE THIS VALUE FOR MORE OR LESS ACCURACY
     // Changing this value will change execution time if command line
     // argument is not given.
-    public static final long DEFAULT_N = 1_000_000_000L; // 1_000_000_000L I like this one
+    public static final long DEFAULT_N = 100_000_000L; // 100_000_000L
 
     /**
      * Estiamates pi using a simple maclauren series. N is the number of iterations
