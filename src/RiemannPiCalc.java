@@ -123,6 +123,7 @@ public class RiemannPiCalc {
     // the calculation drops off a bit. I have a couple of theories
     // why, but I think the most likely has to do with floating point
     // imprecision. Use this method to find the optimum value of n.
+    // Right now, I know it is around 90 - 100 billion.
     private static long findOptimumNValue(CalcVersion calc) {
         double minDiff = Double.MAX_VALUE;
         double currentDiff = Math.PI; // Doesn't really matter what this is
@@ -132,11 +133,10 @@ public class RiemannPiCalc {
         long n = 90_000_000_000L; // Also should be a multiple of 10
 
         // incrementer should be a multiple of 10. Change if you see fit.
-        long incrementer = 10_000_000_000L; // First increment by 10,000,000,000
+        long incrementer = 1_000_000_000L; // First increment by 10,000,000,000
 
         while (incrementer > 0) {
             System.out.println("\rn is currently: " + n);
-            System.out.println("Difference is currently: " + currentDiff);
 
             switch (calc) {
                 case UNDERESTIMATE: 
@@ -150,12 +150,15 @@ public class RiemannPiCalc {
             }
 
             currentDiff = Math.abs(pi - Math.PI);
+            System.out.println("\rDifference is currently: " + currentDiff);
 
             // Accuracy has dropped off if this is true
             if (currentDiff > minDiff) {
-                n -= incrementer; // Go back to previous value of n
+                n -= incrementer * 2; // Go back to second previous value of n
                 incrementer /= 10;
+                n += incrementer;
             } else {
+                minDiff = currentDiff;
                 n += incrementer;
             }
         }
